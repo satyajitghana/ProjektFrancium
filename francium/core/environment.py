@@ -13,6 +13,8 @@ from matplotlib import cm
 
 import seaborn as sns
 
+from .eval_functions import *
+
 sns.set()
 
 
@@ -23,11 +25,13 @@ class BaseEnvironment(ABC):
         y_bounds: Tuple[float, float],
         goal_val: Optional[State] = None,
         tolerance: Optional[float] = 1e-4,
+        eval_func=convex_x_square,
     ):
         self.goal_val: State = goal_val
         self.tolerance: float = tolerance
         self.x_bounds: Tuple[float, float] = x_bounds
         self.y_bounds: Tuple[float, float] = y_bounds
+        self.eval_func_ = eval_func
 
     def get_random_init_position(self) -> State:
         x_min, x_max = self.x_bounds
@@ -100,9 +104,8 @@ class BaseEnvironment(ABC):
         eval_val = self.evaluation_func(state["x"], state["y"])
         return eval_val
 
-    @staticmethod
-    def evaluation_func(X, Y):
-        return 5 * np.sin(X ** 2 + Y ** 2) + (X ** 2 + Y ** 2)
+    def evaluation_func(self, *args, **kwargs):
+        return self.eval_func_(*args, **kwargs)
 
     @abstractmethod
     def evaluate_state(self, state: State) -> Tuple[float, bool]:
