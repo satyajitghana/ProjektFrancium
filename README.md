@@ -18,10 +18,11 @@ pip install git+https://github.com/satyajitghana/ProjektFrancium
 
 ```python
 import francium.algorithms.hill_climbing as hc
+import francium.core.eval_functions as eval_functions
 from francium.core import State
 
 agent = hc.Agent(step_size=1e-1)
-env = hc.Environment(x_bounds=(-5.0, 5.0), y_bounds=(-5.0, 5.0))
+env = hc.Environment(x_bounds=(-5.0, 5.0), y_bounds=(-5.0, 5.0), eval_func=eval_functions.sinx_plus_x)
 solver = hc.Solver(agent=agent, environment=env)
 
 solver.init_solver(
