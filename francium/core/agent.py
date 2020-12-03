@@ -4,7 +4,6 @@ from .state import State
 
 
 class BaseAgent(ABC):
-
     @abstractmethod
     def act(self, *args, **kwargs):
         raise NotImplementedError

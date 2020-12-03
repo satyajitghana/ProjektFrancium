@@ -12,11 +12,7 @@ class Solver(BaseSolver):
         self.pop_size = pop_size
 
     def init_solver(self):
-        self.agent.init_agent(
-            self.pop_size,
-            self.env.x_bounds,
-            self.env.y_bounds
-        )
+        self.agent.init_agent(self.pop_size, self.env.x_bounds, self.env.y_bounds)
 
         logger.info(f"=> Initialized Agent !")
 
@@ -33,11 +29,13 @@ class Solver(BaseSolver):
         eval_val, is_done = self.env.evaluate_state(new_state)
 
         if is_done:
-            logger.info(f"=> training is done ! best state: {self.memory.get_curr_state()}")
+            logger.info(
+                f"=> training is done ! best state: {self.memory.get_curr_state()}"
+            )
             return False
 
         # logger.info(f"z: f(x = {new_state['x']}, y = {new_state['y']}) = {eval_val}")
-        new_state['z'] = eval_val
+        new_state["z"] = eval_val
         self.memory.add_episode(new_state)
 
         return True

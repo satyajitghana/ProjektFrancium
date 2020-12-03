@@ -37,12 +37,14 @@ class Solver(BaseSolver):
         eval_val, is_done = self.env.evaluate_state(new_state)
 
         if is_done:
-            logger.info(f"=> training is done ! best state: {self.memory.get_curr_state()}")
+            logger.info(
+                f"=> training is done ! best state: {self.memory.get_curr_state()}"
+            )
             return False
 
-        if eval_val < curr_state['z']:
+        if eval_val < curr_state["z"]:
             # logger.info(f"z: f(x = {new_state['x']}, y = {new_state['y']}) = {eval_val}")
-            new_state['z'] = eval_val
+            new_state["z"] = eval_val
             self.memory.add_episode(new_state)
 
         return True

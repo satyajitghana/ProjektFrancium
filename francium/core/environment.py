@@ -17,8 +17,13 @@ sns.set()
 
 
 class BaseEnvironment(ABC):
-    def __init__(self, x_bounds: Tuple[float, float], y_bounds: Tuple[float, float], goal_val: Optional[State] = None,
-                 tolerance: Optional[float] = 1e-4):
+    def __init__(
+        self,
+        x_bounds: Tuple[float, float],
+        y_bounds: Tuple[float, float],
+        goal_val: Optional[State] = None,
+        tolerance: Optional[float] = 1e-4,
+    ):
         self.goal_val: State = goal_val
         self.tolerance: float = tolerance
         self.x_bounds: Tuple[float, float] = x_bounds
@@ -28,14 +33,16 @@ class BaseEnvironment(ABC):
         x_min, x_max = self.x_bounds
         y_min, y_max = self.y_bounds
 
-        init_state: State = State({
-            'x': np.random.uniform(low=x_min, high=x_max),
-            'y': np.random.uniform(low=y_min, high=y_max),
-        })
+        init_state: State = State(
+            {
+                "x": np.random.uniform(low=x_min, high=x_max),
+                "y": np.random.uniform(low=y_min, high=y_max),
+            }
+        )
 
         z, _ = self.evaluate_state(init_state)
 
-        init_state['z'] = z
+        init_state["z"] = z
 
         return init_state
 
@@ -47,7 +54,7 @@ class BaseEnvironment(ABC):
 
         # plot the 3d sphere function
 
-        ax1= fig.add_subplot(1, 2, 1, projection='3d')
+        ax1 = fig.add_subplot(1, 2, 1, projection="3d")
 
         x = np.linspace(x_min, x_max, 50)
         y = np.linspace(y_min, y_max, 50)
@@ -58,20 +65,21 @@ class BaseEnvironment(ABC):
 
         z_min, z_max = np.min(Z), np.max(Z)
 
-        ax1.plot_surface(X, Y, Z, rstride=1, cstride=1,
-                         cmap="viridis", edgecolor='none', alpha=0.7)
-        cset = ax1.contour(X, Y, Z, zdir='z', offset=z_min, cmap=cm.coolwarm)
-        cset = ax1.contour(X, Y, Z, zdir='x', offset=x_min, cmap=cm.coolwarm)
-        cset = ax1.contour(X, Y, Z, zdir='y', offset=y_max, cmap=cm.coolwarm)
+        ax1.plot_surface(
+            X, Y, Z, rstride=1, cstride=1, cmap="viridis", edgecolor="none", alpha=0.7
+        )
+        cset = ax1.contour(X, Y, Z, zdir="z", offset=z_min, cmap=cm.coolwarm)
+        cset = ax1.contour(X, Y, Z, zdir="x", offset=x_min, cmap=cm.coolwarm)
+        cset = ax1.contour(X, Y, Z, zdir="y", offset=y_max, cmap=cm.coolwarm)
         ax1.view_init(60, 35)
 
-        ax1.set_xlabel('X')
+        ax1.set_xlabel("X")
         ax1.set_xlim(x_min, x_max)
 
-        ax1.set_ylabel('Y')
+        ax1.set_ylabel("Y")
         ax1.set_ylim(y_min, y_max)
 
-        ax1.set_zlabel('Z')
+        ax1.set_zlabel("Z")
         ax1.set_zlim(z_min, z_max)
 
         # plot the contours
@@ -89,7 +97,7 @@ class BaseEnvironment(ABC):
         plt.show()
 
     def fitness_func(self, state: State) -> float:
-        eval_val = self.evaluation_func(state['x'], state['y'])
+        eval_val = self.evaluation_func(state["x"], state["y"])
         return eval_val
 
     @staticmethod

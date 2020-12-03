@@ -11,15 +11,15 @@ logger = setup_logger(__name__)
 
 class Solver(BaseSolver):
     def __init__(
-            self,
-            agent: Agent,
-            environment: Environment,
-            initial_temp: float,
-            final_temp: float,
-            iters_per_temp: int = 100,
-            temp_reduction: Optional[str] = None,
-            alpha: float = 10.0,
-            beta: float = 5.0
+        self,
+        agent: Agent,
+        environment: Environment,
+        initial_temp: float,
+        final_temp: float,
+        iters_per_temp: int = 100,
+        temp_reduction: Optional[str] = None,
+        alpha: float = 10.0,
+        beta: float = 5.0,
     ):
 
         BaseSolver.__init__(self, agent, environment)
@@ -44,7 +44,7 @@ class Solver(BaseSolver):
         self.curr_temp -= self.alpha
 
     def geometric_temp_reduction(self):
-        self.curr_temp *= (1 / self.alpha)
+        self.curr_temp *= 1 / self.alpha
 
     def slow_decrease_temp_reduction(self):
         self.curr_temp = self.curr_temp / (1 + self.beta * self.curr_temp)
@@ -70,7 +70,9 @@ class Solver(BaseSolver):
         for iter in range(self.iters_per_temp):
 
             if self.curr_temp <= self.final_temp:
-                logger.warning(f"=> curr_temp {self.curr_temp} <= final_temp {self.final_temp} ! cannot anneal further")
+                logger.warning(
+                    f"=> curr_temp {self.curr_temp} <= final_temp {self.final_temp} ! cannot anneal further"
+                )
                 return False
 
             curr_state: State = self.memory.get_curr_state()
@@ -80,17 +82,19 @@ class Solver(BaseSolver):
             eval_val, is_done = self.env.evaluate_state(new_state)
 
             if is_done:
-                logger.info(f"=> training is done ! best state: {self.memory.get_curr_state()}")
+                logger.info(
+                    f"=> training is done ! best state: {self.memory.get_curr_state()}"
+                )
                 return False
 
-            cost: float = curr_state['z'] - eval_val
+            cost: float = curr_state["z"] - eval_val
 
             # check if we can update state based on annealing temp.
             can_anneal: bool = np.random.uniform(0, 1) < np.exp(cost / self.curr_temp)
 
             if cost >= 0 or can_anneal:
                 # logger.info(f"z: f(x = {new_state['x']}, y = {new_state['y']}) = {eval_val}")
-                new_state['z'] = eval_val
+                new_state["z"] = eval_val
 
                 self.memory.add_episode(new_state)
 

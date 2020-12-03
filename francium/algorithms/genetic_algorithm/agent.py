@@ -15,16 +15,23 @@ class Agent(BaseAgent):
         self.population = []
         self.initialized = False
 
-    def init_agent(self, pop_size: int, x_bounds: Tuple[float, float], y_bounds: Tuple[float, float]):
+    def init_agent(
+        self,
+        pop_size: int,
+        x_bounds: Tuple[float, float],
+        y_bounds: Tuple[float, float],
+    ):
         x_min, x_max = x_bounds
         y_min, y_max = y_bounds
 
         population = []
         for _ in range(pop_size):
-            individual = State({
-                "x": np.random.uniform(x_min, x_max),
-                "y": np.random.uniform(y_min, y_max),
-            })
+            individual = State(
+                {
+                    "x": np.random.uniform(x_min, x_max),
+                    "y": np.random.uniform(y_min, y_max),
+                }
+            )
 
             population.append(individual)
 
@@ -83,17 +90,25 @@ class Agent(BaseAgent):
     def act(self, env: Environment):
 
         if not self.initialized:
-            logger.error("=> initialize the agent: `agent.init_agent(pop_size, x_bounds, y_bounds)`")
+            logger.error(
+                "=> initialize the agent: `agent.init_agent(pop_size, x_bounds, y_bounds)`"
+            )
             raise Exception("Agent not Initialized")
 
         next_generation = []
         sorted_by_fitness_population = self.sort_population_by_fitness(env.fitness_func)
         population_size = len(self.population)
-        fitness_sum = sum(env.fitness_func(individual) for individual in self.population)
+        fitness_sum = sum(
+            env.fitness_func(individual) for individual in self.population
+        )
 
         for i in range(population_size):
-            first_choice = self.choice_by_roulette(sorted_by_fitness_population, fitness_sum, env.fitness_func)
-            second_choice = self.choice_by_roulette(sorted_by_fitness_population, fitness_sum, env.fitness_func)
+            first_choice = self.choice_by_roulette(
+                sorted_by_fitness_population, fitness_sum, env.fitness_func
+            )
+            second_choice = self.choice_by_roulette(
+                sorted_by_fitness_population, fitness_sum, env.fitness_func
+            )
 
             individual = self.crossover(first_choice, second_choice)
             individual = self.mutate(individual, env.x_bounds, env.y_bounds)
@@ -104,9 +119,6 @@ class Agent(BaseAgent):
         best_individual = self.sort_population_by_fitness(env.fitness_func)[-1]
 
         # best individual is the new state
-        new_state = State({
-            'x': best_individual['x'],
-            'y': best_individual['y']
-        })
+        new_state = State({"x": best_individual["x"], "y": best_individual["y"]})
 
         return new_state

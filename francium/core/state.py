@@ -3,7 +3,7 @@ from typing import Dict
 
 class State:
     def __init__(self, init_state: Dict[str, float]):
-        self.state_ : Dict[str, float] = init_state
+        self.state_: Dict[str, float] = init_state
 
     def __repr__(self):
         return str(self.state_)

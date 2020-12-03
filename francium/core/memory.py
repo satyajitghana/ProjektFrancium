@@ -19,7 +19,7 @@ class Memory:
     def add_episode(self, state: State) -> None:
         self.memory.append(state)
 
-        if self.best_episode is None or state['z'] < self.best_episode['z']:
+        if self.best_episode is None or state["z"] < self.best_episode["z"]:
             self.best_episode = state
 
     def get_curr_state(self) -> State:

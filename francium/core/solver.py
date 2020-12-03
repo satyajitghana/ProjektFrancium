@@ -41,12 +41,20 @@ class BaseSolver(ABC):
         cp = ax1.contourf(X, Y, Z, 50, alpha=0.6, cmap=cm.bwr)
         fig.colorbar(cp)  # Add a colorbar to a plot
 
-        x_states = [mem['x'] for mem in iter(self.memory)]
-        y_states = [mem['y'] for mem in iter(self.memory)]
+        x_states = [mem["x"] for mem in iter(self.memory)]
+        y_states = [mem["y"] for mem in iter(self.memory)]
 
-        ax1.plot(x_states, y_states, color='black', marker='.', alpha=0.5, linewidth=1, markersize=1)
-        ax1.plot(x_states[0], y_states[0], color='red', marker='o')
-        ax1.plot(x_states[-1], y_states[-1], color='green', marker='o')
+        ax1.plot(
+            x_states,
+            y_states,
+            color="black",
+            marker=".",
+            alpha=0.5,
+            linewidth=1,
+            markersize=1,
+        )
+        ax1.plot(x_states[0], y_states[0], color="red", marker="o")
+        ax1.plot(x_states[-1], y_states[-1], color="green", marker="o")
 
         ax1.set_xlabel("x")
         ax1.set_ylabel("y")
@@ -55,9 +63,9 @@ class BaseSolver(ABC):
 
         # plot the loss
 
-        z_states = [mem['z'] for mem in iter(self.memory)]
+        z_states = [mem["z"] for mem in iter(self.memory)]
 
-        ax2.plot(z_states, marker='.')
+        ax2.plot(z_states, marker=".")
 
         ax2.set_xlabel("iterations")
         ax2.set_ylabel("loss")
