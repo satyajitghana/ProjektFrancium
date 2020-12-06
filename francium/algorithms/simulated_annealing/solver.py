@@ -22,7 +22,7 @@ class Solver(BaseSolver):
         beta: float = 5.0,
     ):
 
-        BaseSolver.__init__(self, agent, environment)
+        BaseSolver.__init__(self, agent, environment, "Simulated Annealing")
         self.initialized: bool = False
         self.curr_temp = initial_temp
         self.final_temp = final_temp

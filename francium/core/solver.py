@@ -17,11 +17,12 @@ logger = setup_logger(__name__)
 
 
 class BaseSolver(ABC):
-    def __init__(self, agent: BaseAgent, environment: BaseEnvironment):
+    def __init__(self, agent: BaseAgent, environment: BaseEnvironment, solver_type: str = None):
         self.agent: BaseAgent = agent
         self.env: BaseEnvironment = environment
         self.memory: Memory = Memory(retain_mem=True)
         self.initialized: bool = False
+        self.solve_type = solver_type
 
     def plot_history(self):
 
@@ -72,11 +73,12 @@ class BaseSolver(ABC):
 
         ax2.legend(["loss"])
 
-        fig.suptitle("Genetic Algorithm", fontsize=20)
+        if self.solve_type:
+            fig.suptitle(self.solve_type, fontsize=20)
 
-        plt.tight_layout()
+            plt.tight_layout()
 
-        plt.subplots_adjust(top=0.95)
+            plt.subplots_adjust(top=0.95)
 
         plt.show()
 

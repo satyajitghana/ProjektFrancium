@@ -9,7 +9,7 @@ logger = setup_logger(__name__)
 
 class Solver(BaseSolver):
     def __init__(self, agent: Agent, environment: Environment):
-        BaseSolver.__init__(self, agent, environment)
+        BaseSolver.__init__(self, agent, environment, "Hill Climbing")
         self.initialized: bool = False
 
     def init_solver(self, init_state: Optional[State] = None):

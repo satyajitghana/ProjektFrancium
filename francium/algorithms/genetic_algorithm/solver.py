@@ -7,7 +7,7 @@ logger = setup_logger(__name__)
 
 class Solver(BaseSolver):
     def __init__(self, agent: Agent, environment: Environment, pop_size: int = 100):
-        BaseSolver.__init__(self, agent=agent, environment=environment)
+        BaseSolver.__init__(self, agent=agent, environment=environment, solver_type="Genetic Algorithm")
         self.initialized: bool = False
         self.pop_size = pop_size
 
