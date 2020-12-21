@@ -8,7 +8,7 @@ with open('requirements.txt', 'r') as fh:
 
 setup(
     name='francium',
-    version='0.0.2c',
+    version='0.0.2d',
     packages=['francium', 'francium.core', 'francium.algorithms', 'francium.algorithms.hill_climbing',
               'francium.algorithms.genetic_algorithm', 'francium.algorithms.simulated_annealing'],
     url='https://github.com/satyajitghana/ProjektFrancium',
