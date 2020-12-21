@@ -1,7 +1,7 @@
 <h1 align="center">Projekt Francium</h1>
 
 <div align="center">
-<img src="logo.png">
+<img src="https://raw.githubusercontent.com/satyajitghana/ProjektFrancium/master/logo.png">
 </div>
 
 ---
