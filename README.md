@@ -14,6 +14,8 @@ A package to test out AI Algorithms in Python
 pip install git+https://github.com/satyajitghana/ProjektFrancium
 ```
 
+## [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/satyajitghana/ProjektFrancium/blob/master/FranciumColab.ipynb)
+
 ## Example Usage
 
 ```python
